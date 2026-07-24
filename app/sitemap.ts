@@ -2,7 +2,7 @@ import type { MetadataRoute } from "next";
 import { getAllProductSlugs } from "@/lib/products";
 
 export default function sitemap(): MetadataRoute.Sitemap {
-  const base = process.env.NEXT_PUBLIC_SITE_URL ?? "https://kalpasimasala.com";
+  const base = process.env.NEXT_PUBLIC_SITE_URL ?? "https://kalpasispices.com";
   const productUrls = getAllProductSlugs().map((slug) => ({
     url: `${base}/products/${slug}`,
     changeFrequency: "monthly" as const,
