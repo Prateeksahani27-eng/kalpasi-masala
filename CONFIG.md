@@ -18,7 +18,7 @@ See `.env.example` for a template.
 
 |----------|-------------|
 
-| NEXT_PUBLIC_SITE_URL | Canonical site URL used for Sitemap, Open Graph, Robots and SEO. Example: [https://kalpasispices.com](https://kalpasispices.com) |
+| NEXT_PUBLIC_SITE_URL | Canonical site URL used for Sitemap, Open Graph, Robots and SEO. Example: [https://www.kalpasispices.com](https://www.kalpasispices.com) |
 
 ---
 
@@ -240,7 +240,7 @@ to
 
 ```
 
-[https://kalpasispices.com](https://kalpasispices.com)
+[https://www.kalpasispices.com](https://www.kalpasispices.com)
 
 ```
 

@@ -8,6 +8,7 @@ import {
   getAllProductSlugs,
   getProductBySlug,
 } from "@/lib/products";
+import { pageOpenGraph, pageTwitter, siteUrl } from "@/lib/seo";
 import {
   getContactWhatsAppUrl,
   getDistributorWhatsAppUrl,
@@ -23,10 +24,26 @@ export async function generateStaticParams() {
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { slug } = await params;
   const product = getProductBySlug(slug);
-  if (!product) return { title: "Product — Kalpasi Masala" };
+  if (!product) return { title: "Product" };
+
+  const title = `${product.name} | Kalpasi Spices`;
+  const canonical = `${siteUrl}/products/${slug}`;
+
   return {
-    title: `${product.name} — Kalpasi Masala`,
+    title: product.name,
     description: product.shortDescription,
+    alternates: {
+      canonical,
+    },
+    openGraph: pageOpenGraph({
+      title,
+      description: product.shortDescription,
+      url: canonical,
+    }),
+    twitter: pageTwitter({
+      title,
+      description: product.shortDescription,
+    }),
   };
 }
 

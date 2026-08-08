@@ -2,16 +2,32 @@ import type { Metadata } from "next";
 import { PageShell } from "@/app/components/page-shell";
 import { Reveal } from "@/app/components/reveal";
 import { SocialLinks } from "@/app/components/social-links";
+import { pageOpenGraph, pageTwitter, siteUrl } from "@/lib/seo";
 import {
   getContactWhatsAppUrl,
   getDistributorWhatsAppUrl,
   getWholesaleWhatsAppUrl,
 } from "@/lib/whatsapp";
 
+const title = "Contact | Kalpasi Spices";
+const description =
+  "Contact Kalpasi Spices for product information, wholesale partnerships, and distributor enquiries.";
+
 export const metadata: Metadata = {
-  title: "Contact — Kalpasi Masala",
-  description:
-    "Contact Kalpasi Masala for product information, wholesale partnerships, and distributor enquiries.",
+  title: "Contact",
+  description,
+  alternates: {
+    canonical: `${siteUrl}/contact`,
+  },
+  openGraph: pageOpenGraph({
+    title,
+    description,
+    url: `${siteUrl}/contact`,
+  }),
+  twitter: pageTwitter({
+    title,
+    description,
+  }),
 };
 
 export default function ContactPage() {

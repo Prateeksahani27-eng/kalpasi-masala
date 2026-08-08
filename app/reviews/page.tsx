@@ -5,12 +5,28 @@ import { PageShell } from "@/app/components/page-shell";
 import { ReviewsExplorer } from "@/app/components/reviews-explorer";
 import { ReviewForm } from "@/app/components/review-form";
 import { Reveal } from "@/app/components/reveal";
+import { pageOpenGraph, pageTwitter, siteUrl } from "@/lib/seo";
 import { getApprovedReviews } from "@/lib/reviews";
 
+const title = "Customer Reviews | Kalpasi Spices";
+const description =
+  "Read approved customer reviews of Kalpasi Spices — premium, preservative-free Indian spices loved in homes across India.";
+
 export const metadata: Metadata = {
-  title: "Customer Reviews — Kalpasi Masala",
-  description:
-    "Read approved customer reviews of Kalpasi Masala — premium, preservative-free Indian spices loved in homes across India.",
+  title: "Customer Reviews",
+  description,
+  alternates: {
+    canonical: `${siteUrl}/reviews`,
+  },
+  openGraph: pageOpenGraph({
+    title,
+    description,
+    url: `${siteUrl}/reviews`,
+  }),
+  twitter: pageTwitter({
+    title,
+    description,
+  }),
 };
 
 export default async function ReviewsPage() {

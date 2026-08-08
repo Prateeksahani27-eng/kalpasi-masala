@@ -2,12 +2,28 @@ import type { Metadata } from "next";
 import { PageShell } from "@/app/components/page-shell";
 import { ProductCard } from "@/app/components/product-card";
 import { Reveal } from "@/app/components/reveal";
+import { pageOpenGraph, pageTwitter, siteUrl } from "@/lib/seo";
 import { products } from "@/lib/products";
 
+const title = "Our Products | Kalpasi Spices";
+const description =
+  "Explore Kalpasi Spices' premium spice range — preservative-free blends ground in small batches for authentic Indian kitchens.";
+
 export const metadata: Metadata = {
-  title: "Our Products — Kalpasi Masala",
-  description:
-    "Explore Kalpasi Masala's premium spice range — preservative-free blends ground in small batches for authentic Indian kitchens.",
+  title: "Our Products",
+  description,
+  alternates: {
+    canonical: `${siteUrl}/products`,
+  },
+  openGraph: pageOpenGraph({
+    title,
+    description,
+    url: `${siteUrl}/products`,
+  }),
+  twitter: pageTwitter({
+    title,
+    description,
+  }),
 };
 
 export default function ProductsPage() {

@@ -1,5 +1,12 @@
 import type { Metadata } from "next";
 import { Cormorant_Garamond, DM_Sans } from "next/font/google";
+import {
+  homeTitle,
+  sharedOpenGraph,
+  sharedTwitter,
+  siteDescription,
+  siteUrl,
+} from "@/lib/seo";
 import "./globals.css";
 
 const cormorant = Cormorant_Garamond({
@@ -14,20 +21,51 @@ const dmSans = DM_Sans({
   weight: ["400", "500", "600"],
 });
 
+const structuredData = {
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "Organization",
+      "@id": `${siteUrl}/#organization`,
+      name: "Kalpasi Spices",
+      alternateName: "Kalpasi Masala",
+      url: `${siteUrl}/`,
+      logo: {
+        "@type": "ImageObject",
+        url: `${siteUrl}/images/kalpasi-logo.png`,
+      },
+      description: siteDescription,
+    },
+    {
+      "@type": "WebSite",
+      "@id": `${siteUrl}/#website`,
+      name: "Kalpasi Spices",
+      url: `${siteUrl}/`,
+      description: siteDescription,
+      publisher: {
+        "@id": `${siteUrl}/#organization`,
+      },
+      inLanguage: "en-IN",
+    },
+  ],
+};
+
 export const metadata: Metadata = {
-  metadataBase: new URL(
-    process.env.NEXT_PUBLIC_SITE_URL ?? "https://kalpasispices.com"
-  ),
-  title: "Kalpasi Masala — Pure Spices, Honest Flavor",
-  description:
-    "Premium, unadulterated Indian spices. No preservatives, no artificial colors — just authentic masala for families who deserve purity.",
-  openGraph: {
-    title: "Kalpasi Masala — Pure Spices, Honest Flavor",
-    description:
-      "Premium, unadulterated Indian spices. No preservatives, no artificial colors — just authentic masala for families who deserve purity.",
-    type: "website",
-    locale: "en_IN",
+  metadataBase: new URL(siteUrl),
+
+  title: {
+    default: homeTitle,
+    template: "%s | Kalpasi Spices",
   },
+
+  robots: {
+    index: true,
+    follow: true,
+  },
+
+  openGraph: sharedOpenGraph,
+
+  twitter: sharedTwitter,
 };
 
 export default function RootLayout({
@@ -41,6 +79,12 @@ export default function RootLayout({
       className={`${cormorant.variable} ${dmSans.variable} h-full antialiased`}
     >
       <body className="flex min-h-full flex-col overflow-x-hidden font-sans">
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{
+            __html: JSON.stringify(structuredData).replace(/</g, "\\u003c"),
+          }}
+        />
         {children}
       </body>
     </html>

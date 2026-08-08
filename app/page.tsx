@@ -1,3 +1,29 @@
+import type { Metadata } from "next";
+import {
+  homeTitle,
+  openGraphDescription,
+  pageOpenGraph,
+  pageTwitter,
+  siteDescription,
+  siteUrl,
+} from "@/lib/seo";
+
+export const metadata: Metadata = {
+  description: siteDescription,
+  alternates: {
+    canonical: `${siteUrl}/`,
+  },
+  openGraph: pageOpenGraph({
+    title: homeTitle,
+    description: openGraphDescription,
+    url: `${siteUrl}/`,
+  }),
+  twitter: pageTwitter({
+    title: homeTitle,
+    description: openGraphDescription,
+  }),
+};
+
 export const dynamic = "force-dynamic";
 
 import Image from "next/image";
