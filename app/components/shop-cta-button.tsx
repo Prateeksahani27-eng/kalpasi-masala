@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useState, type ReactNode } from "react";
+import { createPortal } from "react-dom";
 import { LiquidButton } from "@/components/ui/liquid-glass-button";
 import { siteConfig } from "@/lib/site-config";
 import { cn } from "@/lib/utils";
@@ -21,6 +22,11 @@ export function ShopCtaButton({
   className,
 }: ShopCtaButtonProps) {
   const [open, setOpen] = useState(false);
+  const [mounted, setMounted] = useState(false);
+
+  useEffect(() => {
+    setMounted(true);
+  }, []);
 
   useEffect(() => {
     if (!open) return;
@@ -49,59 +55,62 @@ export function ShopCtaButton({
         {children}
       </LiquidButton>
 
-      {open && (
-        <div
-          className="fixed inset-0 z-[70] flex items-center justify-center bg-espresso/55 p-4 backdrop-blur-sm"
-          onClick={() => setOpen(false)}
-        >
+      {open &&
+        mounted &&
+        createPortal(
           <div
-            className="w-full max-w-md rounded-2xl border border-sand/70 bg-linen p-5 shadow-2xl shadow-espresso/20 sm:p-6"
-            onClick={(event) => event.stopPropagation()}
-            role="dialog"
-            aria-modal="true"
-            aria-label="Choose shopping platform"
+            className="fixed inset-0 z-[70] flex items-center justify-center bg-espresso/55 p-4 py-6 backdrop-blur-sm sm:py-4"
+            onClick={() => setOpen(false)}
           >
-            <div className="flex items-start justify-between gap-4">
-              <div>
-                <p className="text-[10px] font-medium uppercase tracking-[0.3em] text-gold-muted sm:text-xs">
-                  Order Online
-                </p>
-                <h3 className="mt-2 font-serif text-2xl text-espresso sm:text-3xl">
-                  Choose a platform
-                </h3>
-                <p className="mt-2 text-sm text-taupe">
-                  Shop Kalpasi Masala from your preferred marketplace.
-                </p>
-              </div>
-              <button
-                type="button"
-                onClick={() => setOpen(false)}
-                className="rounded-full border border-sand px-2.5 py-1 text-xs text-mocha transition-premium hover:border-terracotta/40 hover:text-terracotta"
-                aria-label="Close"
-              >
-                Close
-              </button>
-            </div>
-
-            <div className="mt-5 grid gap-2.5">
-              {platformLinks.map((platform) => (
-                <a
-                  key={platform.label}
-                  href={platform.href}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="btn-premium inline-flex min-h-11 items-center justify-between rounded-xl border border-sand bg-cream px-4 py-3 text-sm font-medium text-espresso hover:border-terracotta/35 hover:bg-linen"
+            <div
+              className="w-full max-w-md max-h-[85vh] overflow-y-auto rounded-2xl border border-sand/70 bg-linen p-5 shadow-2xl shadow-espresso/20 sm:max-h-none sm:overflow-visible sm:p-6"
+              onClick={(event) => event.stopPropagation()}
+              role="dialog"
+              aria-modal="true"
+              aria-label="Choose shopping platform"
+            >
+              <div className="flex items-start justify-between gap-4">
+                <div>
+                  <p className="text-[10px] font-medium uppercase tracking-[0.3em] text-gold-muted sm:text-xs">
+                    Order Online
+                  </p>
+                  <h3 className="mt-2 font-serif text-2xl text-espresso sm:text-3xl">
+                    Choose a platform
+                  </h3>
+                  <p className="mt-2 text-sm text-taupe">
+                    Shop Kalpasi Masala from your preferred marketplace.
+                  </p>
+                </div>
+                <button
+                  type="button"
+                  onClick={() => setOpen(false)}
+                  className="rounded-full border border-sand px-2.5 py-1 text-xs text-mocha transition-premium hover:border-terracotta/40 hover:text-terracotta"
+                  aria-label="Close"
                 >
-                  {platform.label}
-                  <span className="text-xs uppercase tracking-widest text-taupe">
-                    Open
-                  </span>
-                </a>
-              ))}
+                  Close
+                </button>
+              </div>
+
+              <div className="mt-5 grid gap-2.5">
+                {platformLinks.map((platform) => (
+                  <a
+                    key={platform.label}
+                    href={platform.href}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="btn-premium inline-flex min-h-11 items-center justify-between rounded-xl border border-sand bg-cream px-4 py-3 text-sm font-medium text-espresso hover:border-terracotta/35 hover:bg-linen"
+                  >
+                    {platform.label}
+                    <span className="text-xs uppercase tracking-widest text-taupe">
+                      Open
+                    </span>
+                  </a>
+                ))}
+              </div>
             </div>
-          </div>
-        </div>
-      )}
+          </div>,
+          document.body
+        )}
     </>
   );
 }
