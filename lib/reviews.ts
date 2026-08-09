@@ -1,4 +1,5 @@
 import { readJsonFile, writeJsonFile } from "@/lib/storage";
+import { getStaticFallbackReviews } from "@/lib/review-fallback";
 
 export type ReviewStatus = "pending" | "approved" | "rejected" | "hidden";
 
@@ -70,6 +71,19 @@ export async function getApprovedReviews(limit?: number): Promise<CustomerReview
         new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime()
     );
   return limit ? approved.slice(0, limit) : approved;
+}
+
+/** Approved customer reviews for public pages, with curated static fallback when none exist. */
+export async function getReviewsForPublicDisplay(
+  limit?: number
+): Promise<CustomerReview[]> {
+  const approved = await getApprovedReviews(limit);
+  if (approved.length > 0) {
+    return approved;
+  }
+
+  const fallback = getStaticFallbackReviews();
+  return limit ? fallback.slice(0, limit) : fallback;
 }
 
 export async function getAllReviewsForAdmin(): Promise<CustomerReview[]> {

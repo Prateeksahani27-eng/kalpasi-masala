@@ -18,6 +18,10 @@ async function ensureDataDir() {
   await mkdir(DATA_DIR, { recursive: true });
 }
 
+function warnStorageFallback(filename: string, reason: string): void {
+  console.warn(`[kalpasi-storage] Using fallback for "${filename}": ${reason}`);
+}
+
 async function readBlobJson<T>(filename: string, fallback: T): Promise<T> {
   try {
     const result = await get(blobPath(filename), {
@@ -26,11 +30,21 @@ async function readBlobJson<T>(filename: string, fallback: T): Promise<T> {
       useCache: false,
     });
     if (!result || result.statusCode !== 200 || !result.stream) {
+      warnStorageFallback(
+        filename,
+        result?.statusCode
+          ? `blob read returned status ${result.statusCode}`
+          : "blob object not found"
+      );
       return fallback;
     }
     const text = await new Response(result.stream).text();
     return JSON.parse(text) as T;
-  } catch {
+  } catch (error) {
+    warnStorageFallback(
+      filename,
+      error instanceof Error ? error.message : "blob read failed"
+    );
     return fallback;
   }
 }
@@ -55,7 +69,14 @@ export async function readJsonFile<T>(filename: string, fallback: T): Promise<T>
   try {
     const raw = await readFile(filePath, "utf8");
     return JSON.parse(raw) as T;
-  } catch {
+  } catch (error) {
+    const reason =
+      error instanceof Error && "code" in error && error.code === "ENOENT"
+        ? "local file not found"
+        : error instanceof Error
+          ? error.message
+          : "local read failed";
+    warnStorageFallback(filename, reason);
     return fallback;
   }
 }

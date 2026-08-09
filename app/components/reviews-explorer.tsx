@@ -2,6 +2,7 @@
 
 import { useMemo, useState } from "react";
 import { CustomerReviewCardBlock } from "@/app/components/testimonial-card";
+import { isStaticFallbackReview } from "@/lib/review-fallback";
 import type { CustomerReview } from "@/lib/reviews";
 
 function formatReviewDate(iso: string) {
@@ -77,7 +78,9 @@ export function ReviewsExplorer({
 
       {filtered.length === 0 ? (
         <p className="mt-12 text-center text-sm text-taupe">
-          No reviews match your search yet.
+          {initialReviews.length === 0
+            ? "No reviews are available yet."
+            : "No reviews match your search yet."}
         </p>
       ) : (
         <div className="mt-10 grid gap-5 sm:gap-6 md:grid-cols-2 lg:grid-cols-3">
@@ -88,9 +91,11 @@ export function ReviewsExplorer({
                 quote: r.formattedMessage,
                 author: r.name,
                 location: r.city,
-                rating: r.rating,
+                rating: isStaticFallbackReview(r) ? undefined : r.rating,
                 verified: r.verified,
-                date: formatReviewDate(r.createdAt),
+                date: isStaticFallbackReview(r)
+                  ? undefined
+                  : formatReviewDate(r.createdAt),
               }}
             />
           ))}

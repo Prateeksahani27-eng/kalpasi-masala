@@ -6,7 +6,7 @@ import { ReviewsExplorer } from "@/app/components/reviews-explorer";
 import { ReviewForm } from "@/app/components/review-form";
 import { Reveal } from "@/app/components/reveal";
 import { pageOpenGraph, pageTwitter, siteUrl } from "@/lib/seo";
-import { getApprovedReviews } from "@/lib/reviews";
+import { getReviewsForPublicDisplay } from "@/lib/reviews";
 
 const title = "Customer Reviews | Kalpasi Spices";
 const description =
@@ -30,7 +30,7 @@ export const metadata: Metadata = {
 };
 
 export default async function ReviewsPage() {
-  const reviews = await getApprovedReviews();
+  const reviews = await getReviewsForPublicDisplay();
 
   return (
     <PageShell>
