@@ -1,4 +1,4 @@
-import { siteConfig } from "@/lib/site-config";
+const DEFAULT_WHATSAPP_NUMBER = "916306704158";
 
 const CONTACT_MESSAGE =
   "Hi Kalpasi Masala! I'd like to get in touch. Please share more details.";
@@ -8,28 +8,12 @@ function digitsOnly(phone: string): string {
 }
 
 export function getWhatsAppNumber(): string {
-  return digitsOnly(process.env.NEXT_PUBLIC_WHATSAPP_NUMBER ?? "");
+  const fromEnv = digitsOnly(process.env.NEXT_PUBLIC_WHATSAPP_NUMBER ?? "");
+  return fromEnv || DEFAULT_WHATSAPP_NUMBER;
 }
 
 function resolveWhatsAppHref(message: string): string {
-  const configured = siteConfig.whatsappUrl.trim();
-  if (configured) {
-    try {
-      const url = new URL(configured);
-      if (!url.searchParams.has("text")) {
-        url.searchParams.set("text", message);
-      }
-      return url.toString();
-    } catch {
-      return configured;
-    }
-  }
-
-  const number = getWhatsAppNumber();
-  if (!number) {
-    return `https://wa.me/?text=${encodeURIComponent(message)}`;
-  }
-  return `https://wa.me/${number}?text=${encodeURIComponent(message)}`;
+  return `https://wa.me/${getWhatsAppNumber()}?text=${encodeURIComponent(message)}`;
 }
 
 export function getContactWhatsAppUrl(

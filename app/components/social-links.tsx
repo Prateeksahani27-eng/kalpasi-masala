@@ -38,8 +38,7 @@ export function SocialLinks({
   variant = "icons",
   showMarketplaces = true,
 }: SocialLinksProps) {
-  const whatsappHref =
-    siteConfig.whatsappUrl.trim() || getContactWhatsAppUrl();
+  const whatsappHref = getContactWhatsAppUrl();
 
   const links = [
     {
