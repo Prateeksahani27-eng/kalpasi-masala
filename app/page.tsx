@@ -1,11 +1,13 @@
 import type { Metadata } from "next";
 import {
-  homeTitle,
+  getWebsiteStructuredData,
   openGraphDescription,
   pageOpenGraph,
   pageTwitter,
   siteDescription,
+  siteName,
   siteUrl,
+  structuredDataScriptHtml,
 } from "@/lib/seo";
 
 export const metadata: Metadata = {
@@ -14,12 +16,12 @@ export const metadata: Metadata = {
     canonical: `${siteUrl}/`,
   },
   openGraph: pageOpenGraph({
-    title: homeTitle,
+    title: `${siteName} | Pure Indian Spices & Masala`,
     description: openGraphDescription,
     url: `${siteUrl}/`,
   }),
   twitter: pageTwitter({
-    title: homeTitle,
+    title: `${siteName} | Pure Indian Spices & Masala`,
     description: openGraphDescription,
   }),
 };
@@ -491,6 +493,12 @@ function FAQSection() {
 export default async function Home() {
   return (
     <>
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html: structuredDataScriptHtml(getWebsiteStructuredData()),
+        }}
+      />
       <Header />
       <main className="overflow-x-hidden">
         <div className={HEADER_OFFSET_CLASS}>
