@@ -7,13 +7,22 @@ import { Reveal } from "@/app/components/reveal";
 import {
   getAllProductSlugs,
   getProductBySlug,
+  type Product,
 } from "@/lib/products";
 import {
   getProductCanonicalUrl,
   getProductOpenGraph,
+  getProductSchemaName,
   getProductStructuredDataScriptHtml,
   getProductTwitter,
 } from "@/lib/product-seo";
+
+function productMetaDescription(product: Product) {
+  const brandedName = getProductSchemaName(product);
+  const description = product.shortDescription;
+
+  return `${brandedName} is ${description.charAt(0).toLowerCase()}${description.slice(1)}`;
+}
 import {
   getContactWhatsAppUrl,
   getDistributorWhatsAppUrl,
@@ -31,17 +40,17 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const product = getProductBySlug(slug);
   if (!product) return { title: "Product" };
 
-  const title = `${product.name} | Kalpasi Spices`;
+  const socialTitle = `${product.name} | Kalpasi Spices`;
   const canonical = getProductCanonicalUrl(product);
 
   return {
-    title: product.name,
-    description: product.shortDescription,
+    title: getProductSchemaName(product),
+    description: productMetaDescription(product),
     alternates: {
       canonical,
     },
-    openGraph: getProductOpenGraph(product, title),
-    twitter: getProductTwitter(product, title),
+    openGraph: getProductOpenGraph(product, socialTitle),
+    twitter: getProductTwitter(product, socialTitle),
   };
 }
 
@@ -77,7 +86,7 @@ export default async function ProductDetailPage({ params }: Props) {
                 {product.note}
               </p>
               <h1 className="mt-2 font-serif text-4xl font-medium text-espresso md:text-5xl">
-                {product.name}
+                {getProductSchemaName(product)}
               </h1>
               <p className="mt-4 text-sm leading-relaxed text-mocha sm:text-base">
                 {product.description}
