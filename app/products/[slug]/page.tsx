@@ -7,6 +7,7 @@ import { Reveal } from "@/app/components/reveal";
 import {
   getAllProductSlugs,
   getProductBySlug,
+  products,
   type Product,
 } from "@/lib/products";
 import {
@@ -16,6 +17,11 @@ import {
   getProductStructuredDataScriptHtml,
   getProductTwitter,
 } from "@/lib/product-seo";
+import {
+  getContactWhatsAppUrl,
+  getDistributorWhatsAppUrl,
+  getProductInfoWhatsAppUrl,
+} from "@/lib/whatsapp";
 
 function productMetaDescription(product: Product) {
   const brandedName = getProductSchemaName(product);
@@ -23,11 +29,6 @@ function productMetaDescription(product: Product) {
 
   return `${brandedName} is ${description.charAt(0).toLowerCase()}${description.slice(1)}`;
 }
-import {
-  getContactWhatsAppUrl,
-  getDistributorWhatsAppUrl,
-  getProductInfoWhatsAppUrl,
-} from "@/lib/whatsapp";
 
 type Props = { params: Promise<{ slug: string }> };
 
@@ -74,7 +75,7 @@ export default async function ProductDetailPage({ params }: Props) {
               Our Products
             </Link>
             <span className="mx-2">/</span>
-            <span className="text-mocha">{product.name}</span>
+            <span className="text-mocha">{getProductSchemaName(product)}</span>
           </nav>
 
           <div className="grid gap-10 lg:grid-cols-2 lg:gap-16">
@@ -163,6 +164,30 @@ export default async function ProductDetailPage({ params }: Props) {
             <p className="mt-3 text-sm leading-relaxed text-mocha">
               {product.storage}
             </p>
+          </Reveal>
+        </div>
+      </section>
+
+      <section className="section-padding border-t border-sand bg-linen">
+        <div className="mx-auto max-w-6xl">
+          <Reveal>
+            <h2 className="font-serif text-2xl text-espresso sm:text-3xl">
+              More from Kalpasi Spices
+            </h2>
+            <ul className="mt-6 flex flex-wrap gap-x-6 gap-y-3">
+              {products
+                .filter((p) => p.slug !== slug)
+                .map((p) => (
+                  <li key={p.slug}>
+                    <Link
+                      href={`/products/${p.slug}`}
+                      className="text-sm text-mocha underline-offset-4 transition-premium hover:text-terracotta hover:underline"
+                    >
+                      {getProductSchemaName(p)}
+                    </Link>
+                  </li>
+                ))}
+            </ul>
           </Reveal>
         </div>
       </section>

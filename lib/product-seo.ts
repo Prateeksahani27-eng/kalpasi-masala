@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import type { Product } from "@/lib/products";
-import { siteName, siteUrl, structuredDataScriptHtml } from "@/lib/seo";
+import { organizationId, siteName, siteUrl, structuredDataScriptHtml } from "@/lib/seo";
 
 const productImageDimensions: Record<
   string,
@@ -85,6 +85,10 @@ export function getProductStructuredData(product: Product) {
         brand: {
           "@type": "Brand",
           name: siteName,
+          alternateName: "Kalpasi Masala",
+        },
+        manufacturer: {
+          "@id": organizationId,
         },
         url: canonical,
       },
@@ -107,7 +111,7 @@ export function getProductStructuredData(product: Product) {
           {
             "@type": "ListItem",
             position: 3,
-            name: product.name,
+            name: getProductSchemaName(product),
             item: canonical,
           },
         ],

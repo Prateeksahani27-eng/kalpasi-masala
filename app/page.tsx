@@ -193,8 +193,8 @@ function ProductShowcase() {
             OUR PRODUCTS
           </h2>
           <p className="mt-3 text-sm leading-relaxed text-mocha sm:mt-4 sm:text-base">
-            Premium masala packs, ground in small batches and sealed for
-            authentic aroma in every kitchen.
+            Kalpasi Spices makes preservative-free masala packs, ground in small
+            batches and sealed for authentic aroma in every kitchen.
           </p>
         </Reveal>
 
@@ -276,10 +276,11 @@ function About() {
           </h2>
           <div className="mt-6 space-y-4 text-sm leading-relaxed text-cream/90 sm:mt-8 sm:space-y-6 sm:text-base">
             <p>
-              Kalpasi Masala was born from a simple belief — families deserve
-              spices that are truly pure, deeply flavorful, and free from
-              compromise. We work directly with growers and grind in small
-              batches so nothing is lost between the field and your stove.
+              Kalpasi Spices is a brand of Indian spices and masalas, born from a
+              simple belief — families deserve spices that are truly pure,
+              deeply flavorful, and free from compromise. We work directly with
+              growers and grind in small batches so nothing is lost between the
+              field and your stove.
             </p>
             <p>
               Every pack is a promise: no fillers, no artificial colors, no

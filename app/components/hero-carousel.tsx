@@ -18,6 +18,8 @@ export type HeroSlide = {
   unoptimized?: boolean;
   /** When set, slide image links to this product detail page */
   productSlug?: string;
+  /** Accessible label for product slide links */
+  productLinkLabel?: string;
 };
 
 const defaultSlides: HeroSlide[] = [
@@ -43,6 +45,7 @@ const defaultSlides: HeroSlide[] = [
       "Warm, aromatic, and authentically Indian — ground slow for depth in every dish.",
     align: "right",
     productSlug: "garam-masala",
+    productLinkLabel: "Kalpasi Garam Masala",
   },
   {
     id: "our-story",
@@ -169,7 +172,7 @@ export function HeroCarousel({ slides = defaultSlides }: { slides?: HeroSlide[] 
                 <Link
                   href={`/products/${slide.productSlug}`}
                   className="absolute inset-0 block"
-                  aria-label={`View ${slide.title}`}
+                  aria-label={`View ${slide.productLinkLabel ?? slide.title}`}
                 >
                   <Image
                     src={slide.image}

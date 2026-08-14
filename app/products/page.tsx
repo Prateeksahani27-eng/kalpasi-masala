@@ -39,8 +39,9 @@ export default function ProductsPage() {
               Our Products
             </h1>
             <p className="mx-auto mt-4 max-w-2xl text-sm leading-relaxed text-cream/90 sm:text-base">
-              Premium masala packs crafted for purity, aroma, and trust — a showcase
-              of honest Indian spices, not a checkout experience.
+              The Kalpasi Spices range — premium masala packs crafted for purity,
+              aroma, and trust. A showcase of honest Indian spices, not a checkout
+              experience.
             </p>
           </Reveal>
         </div>

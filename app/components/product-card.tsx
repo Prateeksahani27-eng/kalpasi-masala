@@ -23,6 +23,7 @@ export function ProductCard({
 }: ProductCardProps) {
   const darkPack =
     slug === "black-pepper-powder" || slug === "chicken-masala";
+  const brandedName = `Kalpasi ${name}`;
 
   return (
     <Reveal delay={index * 80}>
@@ -68,13 +69,13 @@ export function ProductCard({
           </div>
           <div className="mt-4 text-center sm:mt-5 md:mt-6">
             <h3 className="font-serif text-lg text-espresso sm:text-xl md:text-2xl">
-              {name}
+              {brandedName}
             </h3>
             <p className="mt-2 px-1 text-xs leading-relaxed text-taupe sm:px-0 sm:text-sm">
               {description}
             </p>
             <span className="mt-4 inline-block text-[10px] font-medium uppercase tracking-widest text-terracotta transition-premium group-hover:text-terracotta-light sm:text-xs">
-              View product →
+              Explore {brandedName} →
             </span>
           </div>
         </article>

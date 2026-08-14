@@ -12,6 +12,8 @@ export const siteAlternateNames = [
 
 export const organizationLogoPath = "/images/kalpasi-logo.png";
 
+export const organizationId = `${siteUrl}/#organization`;
+
 export const homeTitle = "Kalpasi Spices & Masala | Pure Indian Spices";
 
 export const siteDescription =
@@ -40,13 +42,18 @@ export function getOrganizationStructuredData() {
   return {
     "@context": "https://schema.org",
     "@type": "Organization",
-    "@id": `${siteUrl}/#organization`,
+    "@id": organizationId,
     name: siteName,
     alternateName: [...siteAlternateNames],
     url: `${siteUrl}/`,
     logo: {
       "@type": "ImageObject",
       url: `${siteUrl}${organizationLogoPath}`,
+    },
+    brand: {
+      "@type": "Brand",
+      name: siteName,
+      alternateName: "Kalpasi Masala",
     },
     description: siteDescription,
   };
@@ -63,7 +70,7 @@ export function getWebsiteStructuredData() {
     url: `${siteUrl}/`,
     description: siteDescription,
     publisher: {
-      "@id": `${siteUrl}/#organization`,
+      "@id": organizationId,
     },
     inLanguage: "en-IN",
   };
