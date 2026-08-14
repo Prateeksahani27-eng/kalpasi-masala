@@ -8,7 +8,12 @@ import {
   getAllProductSlugs,
   getProductBySlug,
 } from "@/lib/products";
-import { pageOpenGraph, pageTwitter, siteUrl } from "@/lib/seo";
+import {
+  getProductCanonicalUrl,
+  getProductOpenGraph,
+  getProductStructuredDataScriptHtml,
+  getProductTwitter,
+} from "@/lib/product-seo";
 import {
   getContactWhatsAppUrl,
   getDistributorWhatsAppUrl,
@@ -27,7 +32,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   if (!product) return { title: "Product" };
 
   const title = `${product.name} | Kalpasi Spices`;
-  const canonical = `${siteUrl}/products/${slug}`;
+  const canonical = getProductCanonicalUrl(product);
 
   return {
     title: product.name,
@@ -35,15 +40,8 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
     alternates: {
       canonical,
     },
-    openGraph: pageOpenGraph({
-      title,
-      description: product.shortDescription,
-      url: canonical,
-    }),
-    twitter: pageTwitter({
-      title,
-      description: product.shortDescription,
-    }),
+    openGraph: getProductOpenGraph(product, title),
+    twitter: getProductTwitter(product, title),
   };
 }
 
@@ -54,6 +52,12 @@ export default async function ProductDetailPage({ params }: Props) {
 
   return (
     <PageShell>
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html: getProductStructuredDataScriptHtml(product),
+        }}
+      />
       <section className="section-padding bg-cream">
         <div className="mx-auto max-w-6xl">
           <nav className="mb-8 text-xs uppercase tracking-widest text-taupe">

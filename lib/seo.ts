@@ -24,8 +24,8 @@ export const ogImagePath = "/images/products/garam-masala-front.png";
 
 export const ogImage = {
   url: ogImagePath,
-  width: 1200,
-  height: 1200,
+  width: 768,
+  height: 1024,
   alt: "Kalpasi Garam Masala premium pack",
 };
 
@@ -81,30 +81,38 @@ export const sharedTwitter: NonNullable<Metadata["twitter"]> = {
 type PageOpenGraphFields = Pick<
   NonNullable<Metadata["openGraph"]>,
   "title" | "description" | "url"
->;
+> & {
+  images?: NonNullable<Metadata["openGraph"]>["images"];
+};
 
 type PageTwitterFields = Pick<
   NonNullable<Metadata["twitter"]>,
   "title" | "description"
->;
+> & {
+  images?: NonNullable<Metadata["twitter"]>["images"];
+};
 
 export function pageOpenGraph(
   page: PageOpenGraphFields
 ): NonNullable<Metadata["openGraph"]> {
+  const { images, ...fields } = page;
+
   return {
     ...sharedOpenGraph,
-    ...page,
-    images: [ogImage],
+    ...fields,
+    images: images ?? [ogImage],
   };
 }
 
 export function pageTwitter(
   page: PageTwitterFields
 ): NonNullable<Metadata["twitter"]> {
+  const { images, ...fields } = page;
+
   return {
     ...sharedTwitter,
-    ...page,
+    ...fields,
     card: "summary_large_image",
-    images: [ogImagePath],
+    images: images ?? [ogImagePath],
   };
 }
