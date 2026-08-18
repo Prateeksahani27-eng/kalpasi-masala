@@ -7,7 +7,7 @@ export const siteConfig = {
   instagramUrl:
     process.env.NEXT_PUBLIC_INSTAGRAM_URL ??
     process.env.INSTAGRAM_URL ??
-    "https://instagram.com/yourusername",
+    "https://www.instagram.com/kalpasispices_official/",
   whatsappUrl:
     process.env.NEXT_PUBLIC_WHATSAPP_URL ??
     process.env.WHATSAPP_URL ??
