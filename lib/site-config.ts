@@ -15,7 +15,7 @@ export const siteConfig = {
   amazonStoreUrl:
     process.env.NEXT_PUBLIC_AMAZON_STORE_URL ??
     process.env.AMAZON_STORE_URL ??
-    "https://amazon.in",
+    "https://www.amazon.in/s?k=Kalpasi+Garam+Masala",
   flipkartStoreUrl:
     process.env.NEXT_PUBLIC_FLIPKART_STORE_URL ??
     process.env.FLIPKART_STORE_URL ??
